@@ -108,7 +108,7 @@ int main(int argc, char** argv) {
 	{
 		// Allocate and initialize the matrices
 		M  = AllocateMatrix(KERNEL_SIZE, KERNEL_SIZE, 1); 
-		N  = AllocateMatrix((rand() % 1024) + 1, (rand() % 1024) + 1, 1);
+		N  = AllocateMatrix((rand() % 1024000) + 1, (rand() % 1024000) + 1, 1);
 		P  = AllocateMatrix(N.height, N.width, 0);
 	}
 	else
@@ -325,8 +325,12 @@ void WriteFile(Matrix M, char* file_name)
 
 	std::ofstream dest(file_name, std::ios_base::out);
 
-	for (unsigned int x = 0; x < data_write; x++)
+	for (unsigned int y = 0; y < M.height; y++)
 	{
-		dest << M.elements[x]<<" ";
+		for (unsigned int x = 0; x < M.width; x++)
+		{
+			dest << M.elements[x + y * M.width]<<" ";
+		}
+		dest<<"\n";
 	}
 }

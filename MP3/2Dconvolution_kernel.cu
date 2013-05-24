@@ -83,7 +83,8 @@ __global__ void ConvolutionKernel(Matrix M, Matrix N, Matrix P)
 	I_real= I + blockIdx.x * BLOCK_SIZE - halosize;
 	J_real= J + blockIdx.y * BLOCK_SIZE - halosize;
 	
-	I_n = I_o + J * (N.width - halosize) + I;
+	I_n = I_o  + (J - halosize)  * (N.width) + I - halosize;
+
 	
 	if (ii2 < dim_size*dim_size)
 	{
@@ -99,12 +100,16 @@ __global__ void ConvolutionKernel(Matrix M, Matrix N, Matrix P)
 
 	syncthreads();
 
-	for (unsigned int i = 0; i < KERNEL_SIZE; i++)
+	if ((blockIdx.x * BLOCK_SIZE + threadIdx.x < P.width) && (blockIdx.y * BLOCK_SIZE + threadIdx.y < P.height))
 	{
 		for (unsigned int j = 0; j < KERNEL_SIZE; j++)
 		{
-			P.elements[blockIdx.x * BLOCK_SIZE + threadIdx.x + (blockIdx.y * BLOCK_SIZE + threadIdx.y) * P.width] += Md[i + j * KERNEL_SIZE] * ds_N[j + threadIdx.y][i + threadIdx.x];
+			for (unsigned int i = 0; i < KERNEL_SIZE; i++)
+			{
+				
+				P.elements[blockIdx.x * BLOCK_SIZE + threadIdx.x + (blockIdx.y * BLOCK_SIZE + threadIdx.y) * P.width] += Md[i + j * KERNEL_SIZE] * ds_N[j + threadIdx.y][i + threadIdx.x];
+			}
 		}
 	}
-}
 
+}

@@ -1,0 +1,20 @@
+Reconstruct a 512x512 image using backprojection (with linear interpolation) and the following reconstruction paramters
+Projection data is already filtered.
+Note that the ReadData script is useful for loading these files into matlab.
+
+Parallel Beam
+
+	Projection data (thorax_par_projections.dat)
+	735 detectors
+	768 views
+	Data stored as floating point with first two values in file are these dimensions (4-byte integer) 
+
+	Detector spacing = 1
+	Central Detector = 367
+	Source Angles = Evenly spaced on [0, pi)
+	Reconstruction pixel size = 1
+
+
+Example Reconstructed Image in
+	thorax_par.img
+	Image files are 512x512 floating point (4-byte) data with two 4-byte integer header with size information
