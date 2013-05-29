@@ -1,0 +1,78 @@
+Parallel Prefix Sum
+Due: Tuesday, October 18th @ 11:59PM
+
+This MP is an implementation of a parallel prefix sum. The algorithm
+is also called "scan", and will be referred to as "scan" in this description.
+Scan is a useful building block for many parallel algorithms, such as radix
+sort, quicksort, tree operations, and histograms. Exclusive scan applied to an
+Array A will produce an Array A', where:
+
+        A'[i] = A'[i-1] + A[i-1] : A[0] = 0
+Or:
+        A'[i] = sum(j = 0 to i-1) { A[j] } : A[0] = 0
+
+While scan is an appropriate algorithm for any associative operator, we will be
+using addition. Please read Mark Harris's report "Parallel Prefix Sum (Scan)
+with CUDA" to learn the algorithmic background for this assignment. Note that
+you do not need to replicate any of their algorithms exactly, but this
+assignment does require a "work-efficient" algorithm.  
+
+1) Unzip the tarball into your SDK "C/src" directory.
+
+2) Edit the source files to complete the functionality of the exclusive scan 
+   on the device. Use a tiled implementation that can process a very large 
+   array. Compiling your code will produce the executable "mp4.2-prefix-scan"
+   in your SDK "C/bin/linux/release" directory.
+
+3) There are several modes of operation for this application.
+
+   No arguments: randomly generate input data and compare against the host's
+   result.
+
+   One argument: randomly generate input data, and write the result to the file
+   specified by the argument.  
+
+   Two arguments: the first argument specifies a file, the contents of which
+   are read for the array size. Randomly generate input data, and write it to
+   the file specified by the second argument (good for generating test arrays).
+   
+   Three arguments: the first argument specifies a file, the contents of which 
+   are read for the array size. The second and third arguments speficy files
+   to read the input array and write the resulting array respectively.
+
+   Note that if you wish to use the output of one run of the application as an
+   input, you must delete the first line in the output file, which displays
+   the accuracy of the values within the file. The value is not relevant for
+   this application.
+
+4) Submit your solution via Compass as a tarball. Your submission should
+   contain the "mp4.2-prefix-scan" folder provided, with all the changes and
+   additions you made to the source code. In addition, add a text file, Word
+   document, or PDF file with your answers to the following questions: 
+
+   1. Near the top of "scan_largearray.cu", set #define DEFAULT_NUM_ELEMENTS
+      to 16777216. Set #define MAX_RAND to 3.  
+  
+   2. Record the performance results when run without arguments, including the
+      host CPU and GPU processing times and the speedup.  
+
+   3. Describe how you handled arrays not a power of two in size, and how you
+      minimized shared memory bank conflicts. Also describe any other
+      performance-enhancing optimizations you added.  
+
+   4. How do the measured FLOPS rate for the CPU and GPU kernels compare 
+      with each other, and with the theoretical performance limits of each
+      architecture? For your GPU implementation, discuss what bottlenecks 
+      your code is likely bound by, limiting higher performance.  
+
+
+Grading:
+
+Your submission will be graded based on the following parameters.  
+
+Functionality/knowledge: 65%
+    - Produces correct outputs results.
+    - Handles boundary conditions correclty.
+    - Uses shared, constant or texture memory to hide global memory latency.  
+
+Report: 35%
