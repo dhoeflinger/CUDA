@@ -55,7 +55,7 @@
 // includes, kernels
 
 
-#define DEFAULT_NUM_ELEMENTS 16000000 
+#define DEFAULT_NUM_ELEMENTS 16500000
 #define MAX_RAND 3
 
 
@@ -235,6 +235,7 @@ runTest( int argc, char** argv)
     prescanArray(d_odata, d_idata, 16);
 
     // Run the prescan
+	timer.reset();
 	timer.start();
     
     // **===-------- MP4.2 - Modify the body of this function -----------===**

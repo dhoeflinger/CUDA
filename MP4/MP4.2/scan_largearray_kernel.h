@@ -5,7 +5,7 @@
 #define NUM_BANKS 16
 #define LOG_NUM_BANKS 4
 // MP4.2 - You can use any other block size you wish.
-#define BLOCK_SIZE 256
+#define BLOCK_SIZE 128
 
 void preallocBlockSums(int num_elements);
 void prescanArray(float *outArray, float *inArray, int numElements);
