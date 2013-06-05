@@ -26,9 +26,10 @@
 // CUDA runtime
 #include <cuda_runtime.h>
 
+#define WIN32
 // helper functions and utilities to work with CUDA
-#include <helper_cuda.h>
-#include <helper_functions.h>
+#include "helper_cuda.h"
+#include "helper_functions.h"
 
 #ifndef MAX
 #define MAX(a,b) (a > b ? a : b)
@@ -38,10 +39,10 @@
 //! Simple test kernel for device functionality
 //! @param g_odata  memory to process (in and out)
 ///////////////////////////////////////////////////////////////////////////////
-__global__ void kernel(...)
-{
+//__global__ void kernel(...)
+//{
 
-}
+//}
 
 
 
@@ -50,14 +51,19 @@ void gold (float * data, int L , int P, float* img, int N, float Tdet, float cen
 
 	for (int px = 0; px < P; px++)
 	{
-		float theta = dtheta * px;
+		float theta = dTheta * px;
 
 		for (int lx = 0; lx < L; lx++)
 		{
+			float rx_comp = -lx * sin(theta);
+			for (int ly = 0; ly < L; ly++)
+			{
+				float ry_comp = ly * cos(theta);
 
-			float r = cos(theta) *  (cen_det - lx * TDet)/cen_det + sin(theta) * (1x *TDet - cen_det);
+				float tloc = ry_comp + rx_comp;
+				img[ly * N + lx] = data[(int)tloc] * ((int)tloc + 1 - tloc)  + data[(int)tloc + 1] * (tloc - (int)tloc);
 			
-			
+			}
 
 		}
 	}
@@ -81,7 +87,7 @@ runTest(float* data, int L, int P, float* img, int N, float Tdet, float cen_det,
     sdkCreateTimer(&timer);
     sdkStartTimer(&timer);
 
-    kernel<<< grid, threads >>>(...);
+//    kernel<<< grid, threads >>>(...);
    
 	cudaDeviceSynchronize();
 	sdkStopTimer(&timer);

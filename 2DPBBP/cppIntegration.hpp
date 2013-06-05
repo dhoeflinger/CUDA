@@ -1,0 +1,1 @@
+void gold (float * data, int L , int P, float* img, int N, float Tdet, float cen_det, float dTheta);

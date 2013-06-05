@@ -1,4 +1,4 @@
-load parallel_projections_filtered.mat; %defines proj_data
+%load parallel_projections_filtered.mat; %defines proj_data
 
 N = 512;
 proj_len = size(proj_data, 1);

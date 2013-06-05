@@ -25,6 +25,7 @@
 
 #include "IRUtility/Data/Array.hpp"
 #include "IRUtility/Oper/Timer.hpp"
+#include "cppIntegration.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // declaration, forward
@@ -49,7 +50,8 @@ main(int argc, char **argv)
 	Timer full_timer;
 	full_timer.Start();
     // run the device part of the program
-    bool bTestResult = runTest(a[0], a.GetRowLength(), a.GetRowCount(), b[0], 512, Tdet, cen_det, dTheta);
+//    bool bTestResult = runTest(a[0], a.GetRowLength(), a.GetRowCount(), b[0], 512, Tdet, cen_det, dTheta);
+	gold(a[0], a.GetRowLength(), a.GetRowCount(), b[0], 512, Tdet, cen_det, dTheta);
 	full_timer.Stop();
 	printf("Run took %.2f sec\n", full_timer.TimeElapsed());
 
